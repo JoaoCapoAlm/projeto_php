@@ -1,5 +1,5 @@
 <?php
-function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass = '', $msg = 'Não há dados para exibir', $boldSecondColumn = false, $pageSize = 20, $pag = 'page')
+function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $pageSize = 20, $pag = 'page'): void
 {
     $page = isset($_GET[$pag]) ? max(1, intval($_GET[$pag])) : 1;
 
@@ -66,6 +66,7 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass = '', $msg =
     }
     echo "</table>";
 
+    /*
     echo "<div class='paginas'>";
     if ($page > 1) {
         $prevPage = $page - 1;
@@ -74,12 +75,13 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass = '', $msg =
     echo " $page ";
     if ($page < $totalPages) {
         $nextPage = $page + 1;
-        echo "<a href='" . $_SERVER['PHP_SELF'] . "?currency=" . $_GET['currency'] . "&$pag=$nextPage'>Próximo</a>";
+        echo "<a href='" . $_SERVER['PHP_SELF'] . "?currency=" . ($_GET['currency'] ?? 1) . "&$pag=$nextPage'>Próximo</a>";
     }
     echo "</div>";
+    */
 }
 
-function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', $chartTitle = 'Gráfico', $xAxisLabel = 'Data', $yAxisLabel = 'Valor', $pageSize = 20)
+function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', $chartTitle = 'Gráfico', $xAxisLabel = 'Data', $yAxisLabel = 'Valor', $pageSize = 20): void
 {
     $json = file_get_contents($apiUrl);
     $data = json_decode($json, true);
@@ -94,7 +96,6 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', 
         return;
     }
 
-    $totalRows = count($data);
     $labels = [];
     $values = [];
 
@@ -113,8 +114,8 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var ctx = document.getElementById('<?= $chartId ?>').getContext('2d');
-        var myChart = new Chart(ctx, {
+        const ctx = document.getElementById('<?= $chartId ?>').getContext('2d');
+        const myChart = new Chart(ctx, {
             type: '<?= $chartType ?>',
             data: {
                 labels: <?= $labels ?>,
@@ -151,7 +152,5 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', 
             }
         });
     </script>
-
 <?php
 }
-?>

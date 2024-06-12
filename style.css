@@ -120,3 +120,27 @@ tr:hover {
     background-color: #0056b3;
     color: #fff;
 }
+
+.w-50 {
+    width: 50%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group input {
+    box-sizing: border-box;
+}
