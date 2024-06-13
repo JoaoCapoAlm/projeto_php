@@ -1,25 +1,24 @@
-<?php include_once './parts/header.php'; ?>
-
 <?php
-    require_once './functions/session.php';
-    include_once './functions/banco.php';
-
+$paginaApenasLogado = false;
+include_once './parts/header.php';
     if(estaLogado()){
-        header('location: ./graficos.php');
+        header('location: ./menu.php');
         exit();
     }
 
-    if(!empty($_GET['login']) && !empty($_GET['senha'])){
-
-
-        var_dump(loginDB($_GET['login'], $_GET['senha']));
-
+    $sucessoLogin = true;
+    if(!empty($_POST['login']) && !empty($_POST['senha'])){
+        $sucessoLogin = loginDB($_POST['login'], $_POST['senha']);
+        if($sucessoLogin){
+            header('Location: ./menu.php');
+            exit();
+        }
     }
 ?>
 
 
 <div class="container">
-    <form method="get">
+    <form method="post">
         <div class="form-group">
             <label for="login">Login</label>
             <input type="text" id="login" name="login" />
@@ -30,7 +29,10 @@
         </div>
         <div class="form-group w-100">
             <div class="w-50 mx-auto" style="text-align: center">
-            <button type="submit">Acessar</button>
+                <?php if($sucessoLogin): ?>
+                    <p>Erro ao acessar</p>
+                <?php endif; ?>
+                <button type="submit">Acessar</button>
             </div>
         </div>
     </form>

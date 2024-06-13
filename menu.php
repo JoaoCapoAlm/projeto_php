@@ -1,7 +1,9 @@
-<?php include_once './parts/header.php'; ?>
+<?php
+$paginaApenasLogado = true;
+include_once './parts/header.php';
+?>
     <div class="container">
         <?php
-        include_once './functions/apiMoedas.php';
 
         $selectedCurrency = empty($_GET['currency']) ? 'USD-BRL' : $_GET['currency'];
         $apiUrl = "https://economia.awesomeapi.com.br/json/daily/$selectedCurrency/1000";

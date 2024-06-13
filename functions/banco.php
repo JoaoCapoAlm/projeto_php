@@ -43,10 +43,13 @@ function loginDB($login, $senha)
 {
     global $banco;
 
-    $pass = password_hash($senha, PASSWORD_DEFAULT);
+    $q = "SELECT id, senha FROM usuarios WHERE login= '$login' LIMIT 1";
+    $resp = $banco->query($q)->fetch_row();
 
-    $q = "SELECT id FROM usuarios WHERE login= '$login' AND senha= '$pass' LIMIT 1";
-    $resp = $banco->query($q);
-
-    return $resp->fetch_row();
+    if(password_verify($senha, $resp[1])){
+        sessionLogin($resp[0]);
+        return true;
+    } else {
+        return false;
+    }
 }

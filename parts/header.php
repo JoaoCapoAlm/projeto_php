@@ -1,3 +1,12 @@
+<?php
+
+require_once './functions/session.php';
+require_once './functions/banco.php';
+require_once './functions/functions.php';
+@session_start();
+$paginaApenasLogado = $paginaApenasLogado ?? false;
+?>
+
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -15,9 +24,11 @@
     <nav>
         <ul>
             <?php
-            $currencies = ["USD-BRL", "EUR-BRL", "BTC-BRL"];
-            foreach ($currencies as $currency) {
-                echo "<li><a href='?currency=$currency'>$currency</a></li>";
+            if($paginaApenasLogado){
+                $currencies = ["USD-BRL", "EUR-BRL", "BTC-BRL"];
+                foreach ($currencies as $currency) {
+                    echo "<li><a href='?currency=$currency'>$currency</a></li>";
+                }
             }
             ?>
         </ul>
