@@ -28,7 +28,7 @@ $paginaApenasLogado = $paginaApenasLogado ?? false;
             <?php endif; ?>
             <?php
             if($paginaApenasLogado){
-                $currencies = ["USD-BRL", "EUR-BRL", "BTC-BRL"];
+                $currencies = ["USD-BRL", "EUR-BRL", "BTC-BRL", "GBP-BRL", "JPY-BRL", "AUD-BRL", "CAD-BRL"];
                 foreach ($currencies as $currency) {
                     echo "<li><a href='?currency=$currency'>$currency</a></li>";
                 }

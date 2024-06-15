@@ -81,7 +81,7 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
     
 }
 
-function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', $chartTitle = 'Gráfico', $xAxisLabel = 'Data', $yAxisLabel = 'Valor', $pageSize = 20): void
+function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $chartTitle = 'Gráfico', $xAxisLabel = 'Data', $yAxisLabel = 'Valor', $pageSize = 365): void
 {
     $json = file_get_contents($apiUrl);
     $data = json_decode($json, true);
@@ -122,8 +122,8 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', 
                 datasets: [{
                     label: '<?= $yAxisLabel ?>',
                     data: <?= $values ?>,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 }]
             },
