@@ -20,10 +20,10 @@ function updateOnDB($data, $set, $where)
 }
 
 
-function criarUsuario($usuario, $nome, $senha)
+function criarUsuario($usuario, $nome, $senha, $cpf)
 {
     $senha = password_hash($senha, PASSWORD_DEFAULT);
-    createOnDB('usuarios', "(NULL, '$usuario', '$nome', '$senha')");
+    createOnDB('usuarios', "(NULL, '$usuario', '$nome', '$senha', '$cpf')");
 }
 
 function atualizarUsuario($usuario, $nome = "", $senha = "")

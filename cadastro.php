@@ -28,7 +28,7 @@ include "./parts/header.php";
           if ($senha != $confirmaSenha) {
             echo "<p style='color:red;'><b>As senhas informadas não são iguais.<b><p>";
           } else {
-            criarUsuario($cadLogin, $nome, $senha);
+            criarUsuario($cadLogin, $nome, $senha, $cpf);
             header('location: ./menu.php');
             exit();
           }

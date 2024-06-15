@@ -151,7 +151,7 @@ tr:hover {
     border: 1px solid black;
     text-align: center;
     padding: 15px;
-    margin: 100px;
+    margin: 40px;
     opacity: 0;
     animation: fadeIn 2s forwards;
     box-shadow: 15px 35px 15px rgba(0, 0, 0, 0.2);
