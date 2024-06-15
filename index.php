@@ -29,9 +29,7 @@ include_once './parts/header.php';
         </div>
         <div class="form-group w-100">
             <div class="w-50 mx-auto" style="text-align: center">
-                <?php if($sucessoLogin): ?>
-                    <p>Erro ao acessar</p>
-                <?php endif; ?>
+                
                 <button type="submit">Acessar</button>
                 <br>
                 <a href="cadastro.php"><h4>Não tem conta? Clique aqui e crie a sua</h4></a>

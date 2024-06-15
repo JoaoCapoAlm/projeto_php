@@ -1,6 +1,11 @@
 <?php
+
 $paginaApenasLogado = true;
 include_once './parts/header.php';
+if(!$_SESSION['user_id']){
+    header('Location: ./index.php');
+    exit();
+}
 ?>
     <div class="container">
         <?php
