@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Cadastro</title>
-</head>
-
-<body>
+<?php 
+include "./parts/header.php";
+?>
   <div class="cadastro">
     <h3>Realize o seu cadastro</h3>
     <form action="" method="post">
@@ -24,10 +16,6 @@
       <input type="password" name="confirmaSenha" id="confirmaSenha" required><br>
       <input type="submit" value="Enviar"><br>
       <?php
-
-      require_once './functions/session.php';
-      require_once './functions/banco.php';
-      require_once './functions/functions.php';
 
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nome = $_POST['nome'];
@@ -50,6 +38,6 @@
       ?>
     </form>
   </div>
-</body>
-
-</html>
+  <?php 
+include "./parts/footer.php";
+?>
