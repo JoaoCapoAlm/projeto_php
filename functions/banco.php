@@ -1,5 +1,5 @@
 <?php
-$banco = new mysqli("localhost:3306", "root", "", "projeto");
+$banco = new mysqli('localhost:3307', 'root', '', 'projeto');
 
 function createOnDB($into, $value)
 {
