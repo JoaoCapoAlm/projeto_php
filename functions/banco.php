@@ -46,12 +46,20 @@ function loginDB($login, $senha)
     global $banco;
 
     $q = "SELECT id, senha FROM usuarios WHERE usuario = '$login' LIMIT 1";
-    $resp = $banco->query($q)->fetch_row();
+    $resp = $banco->query($q);
 
-    if(password_verify($senha, $resp[1])){
-        sessionLogin($resp[0]);
-        return true;
+    if ($resp && $resp->num_rows > 0) {
+        $row = $resp->fetch_row();
+
+        if (password_verify($senha, $row[1])) {
+            sessionLogin($row[0]);
+            return true;
+        } else {
+            echo "Usuário ou senha inválidos.";
+            return false;
+        }
     } else {
+        echo "Usuário não encontrado.";
         return false;
     }
 }
