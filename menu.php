@@ -7,13 +7,11 @@ include_once './parts/header.php';
 
         $selectedCurrency = empty($_GET['currency']) ? 'USD-BRL' : $_GET['currency'];
         $apiUrl = "https://economia.awesomeapi.com.br/json/daily/$selectedCurrency/1000";
-        generateChartFromApi($apiUrl, 'myChart', 'line', 'Variação do Dólar Americano', 'Data', 'Valor em Reais');
+        generateChartFromApi($apiUrl, 'myChart', 'line',$selectedCurrency, 'Data', 'Valor em Reais');
         ?>
     </div>
-    <div class="container">
-        <?php
-        renderTableFromApi($apiUrl, $selectedCurrency, '', 'Não há dados para exibir');
-        ?>
+    <div class="container" style="height: 600px; padding:10px;">
+        <iframe src="./parts/table.php?currency=<?php echo $selectedCurrency?>" frameborder="0" style="width: 100%; height:100%;"></iframe>
     </div>
 
 <?php include_once './parts/footer.php'; ?>

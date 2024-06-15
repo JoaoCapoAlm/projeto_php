@@ -66,7 +66,7 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
     }
     echo "</table>";
 
-    /*
+    
     echo "<div class='paginas'>";
     if ($page > 1) {
         $prevPage = $page - 1;
@@ -78,7 +78,7 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
         echo "<a href='" . $_SERVER['PHP_SELF'] . "?currency=" . ($_GET['currency'] ?? 1) . "&$pag=$nextPage'>Próximo</a>";
     }
     echo "</div>";
-    */
+    
 }
 
 function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'line', $chartTitle = 'Gráfico', $xAxisLabel = 'Data', $yAxisLabel = 'Valor', $pageSize = 20): void
