@@ -1,6 +1,6 @@
 <?php
 // $banco = new mysqli("localhost:3307", "lucas", "", "projeto");
-// $banco = new mysqli("localhost:3307", "Levoratech", "342711Lu#3427", "levoratech");
+$banco = new mysqli("localhost:3307", "Levoratech", "342711Lu#3427", "levoratech");
 
 
 function createOnDB($into, $value)
@@ -8,7 +8,7 @@ function createOnDB($into, $value)
     global $banco;
 
     $q = "INSERT INTO $into VALUES $value";
-    $banco->query($q);
+   echo $banco->query($q);
 }
 
 function updateOnDB($data, $set, $where)
@@ -45,7 +45,7 @@ function loginDB($login, $senha)
 {
     global $banco;
 
-    $q = "SELECT id, senha FROM usuarios WHERE login= '$login' LIMIT 1";
+    $q = "SELECT id, senha FROM usuarios WHERE usuario = '$login' LIMIT 1";
     $resp = $banco->query($q)->fetch_row();
 
     if(password_verify($senha, $resp[1])){
