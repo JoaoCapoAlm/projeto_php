@@ -20,7 +20,7 @@ $paginaApenasLogado = $paginaApenasLogado ?? false;
 </head>
 <body>
 <header>
-    <h1>Trabalho Java</h1>
+    <h1>Trabalho PHP</h1>
     <nav>
         <ul>
             <?php
