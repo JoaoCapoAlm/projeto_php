@@ -33,6 +33,8 @@ include_once './parts/header.php';
                     <p>Erro ao acessar</p>
                 <?php endif; ?>
                 <button type="submit">Acessar</button>
+                <br>
+                <a href="cadastro.php"><h4>Não tem conta? Clique aqui e crie a sua</h4></a>
             </div>
         </div>
     </form>
