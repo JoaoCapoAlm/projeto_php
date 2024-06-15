@@ -20,9 +20,12 @@ $paginaApenasLogado = $paginaApenasLogado ?? false;
 </head>
 <body>
 <header>
-    <h1>Trabalho Java</h1>
+    <h1>Trabalho PHP</h1>
     <nav>
         <ul>
+        <?php if(estaLogado()): ?>
+                <li><a href="./logout.php" class="logout-btn">Sair</a></li>
+            <?php endif; ?>
             <?php
             if($paginaApenasLogado){
                 $currencies = ["USD-BRL", "EUR-BRL", "BTC-BRL"];
