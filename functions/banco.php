@@ -59,7 +59,7 @@ function loginDB($login, $senha)
             return false;
         }
     } else {
-        echo "Usuário não encontrado.";
+        echo "Usuário ou senha inválidos.";
         return false;
     }
 }
