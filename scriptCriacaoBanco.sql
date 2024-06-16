@@ -10,3 +10,13 @@ CREATE TABLE `projeto`.`usuarios` (
     PRIMARY KEY (`id`),
     UNIQUE `UQ_usuarios_login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Alteração da tabela caso não queiram criar uma nova:
+ALTER TABLE `projeto`.`usuarios`
+    ADD COLUMN `saldo` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    ADD COLUMN `USD` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    ADD COLUMN `EUR` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    ENGINE = InnoDB,
+    CONVERT TO CHARACTER SET utf8;
+

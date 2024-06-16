@@ -237,8 +237,6 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $
                 }
             }
         });
-    </script>
-
-    
+    </script>    
 <?php
 }
