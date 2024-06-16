@@ -1,9 +1,12 @@
-        CREATE TABLE `projeto`.`usuarios` (
-            `id` INT NOT NULL AUTO_INCREMENT ,
-            `login` VARCHAR(255) NOT NULL ,
-            `nome` VARCHAR(255) NOT NULL,
-            `cpf` varchar(20) NOT NULL,
-            `senha` VARCHAR(255) NOT NULL ,
-            PRIMARY KEY (`id`),
-            UNIQUE `UQ_usuarios_login` (`login`)
-        )
+CREATE TABLE `projeto`.`usuarios` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `login` VARCHAR(255) NOT NULL,
+    `nome` VARCHAR(255) NOT NULL,
+    `cpf` VARCHAR(20) NOT NULL,
+    `senha` VARCHAR(255) NOT NULL,
+    `saldo` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `USD` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `EUR` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    PRIMARY KEY (`id`),
+    UNIQUE `UQ_usuarios_login` (`login`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

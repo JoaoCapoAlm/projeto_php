@@ -54,7 +54,7 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
         foreach ($headers as $key => $header) {
             $value = isset($row[$key]) ? $row[$key] : '';
             if ($key == 'timestamp' || $key == 'create_date') {
-                $value = !empty($value) ? date('d/m/Y', $value) : '';
+                $value = !empty($value) ? date('d/m/Y', strtotime($value)) : '';
             } elseif (is_numeric($value) && $key != 'pctChange') {
                 $value = number_format($value, 2, ',', '.');
             } elseif ($key == 'pctChange') {
@@ -66,7 +66,6 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
     }
     echo "</table>";
 
-    
     echo "<div class='paginas'>";
     if ($page > 1) {
         $prevPage = $page - 1;
@@ -75,10 +74,9 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
     echo " $page ";
     if ($page < $totalPages) {
         $nextPage = $page + 1;
-        echo "<a href='" . $_SERVER['PHP_SELF'] . "?currency=" . ($_GET['currency'] ?? 1) . "&$pag=$nextPage'>Próximo</a>";
+        echo "<a href='" . $_SERVER['PHP_SELF'] . "?currency=" . $_GET['currency'] . "&$pag=$nextPage'>Próximo</a>";
     }
     echo "</div>";
-    
 }
 
 function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $chartTitle = 'Gráfico', $xAxisLabel = 'Data', $yAxisLabel = 'Valor', $pageSize = 365): void
@@ -102,13 +100,13 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $
     $data = array_slice($data, 0, $pageSize);
 
     foreach ($data as $row) {
-        $labels[] = date('d/m/Y', $row['timestamp']);
+        $labels[] = date('d/m/Y', strtotime($row['timestamp']));
         $values[] = $row['bid'];
     }
 
     $labels = json_encode($labels);
     $values = json_encode($values);
-?>
+    ?>
 
     <canvas id="<?= $chartId ?>"></canvas>
 
@@ -152,5 +150,94 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $
             }
         });
     </script>
-<?php
+    <?php
 }
+
+function obterSaldo($userId)
+{
+    global $banco;
+    $stmt = $banco->prepare("SELECT saldo FROM usuarios WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $stmt->bind_result($saldo);
+    $stmt->fetch();
+    $stmt->close();
+    return $saldo;
+}
+
+function obterSaldoMoeda($userId, $moeda)
+{
+    global $banco;
+    $stmt = $banco->prepare("SELECT $moeda FROM usuarios WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $stmt->bind_result($saldo);
+    $stmt->fetch();
+    $stmt->close();
+    return $saldo;
+}
+
+function realizarOperacao($operacao, $moeda, $quantidade)
+{
+    global $banco, $userId;
+    $cotacao = obterCotacao($moeda);
+
+    if ($operacao === 'comprar') {
+        $valorOperacao = $quantidade * $cotacao;
+        $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo - ?, $moeda = $moeda + ? WHERE id = ?");
+        $stmt->bind_param("ddi", $valorOperacao, $quantidade, $userId);
+        $stmt->execute();
+        $stmt->close();
+    } elseif ($operacao === 'vender') {
+        $valorOperacao = $quantidade * $cotacao;
+        $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ?, $moeda = $moeda - ? WHERE id = ?");
+        $stmt->bind_param("ddi", $valorOperacao, $quantidade, $userId);
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
+function obterCotacao($moeda)
+{
+    $apiUrl = "https://economia.awesomeapi.com.br/json/last/$moeda-BRL";
+    $json = file_get_contents($apiUrl);
+    $data = json_decode($json, true);
+    return $data["$moeda"."BRL"]['bid'];
+}
+
+function realizarDeposito($moeda, $quantidade, $userId)
+{
+    global $banco;
+
+    if ($moeda === 'R$') {
+        $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ? WHERE id = ?");
+        $stmt->bind_param("di", $quantidade, $userId);
+    } else {
+        $stmt = $banco->prepare("UPDATE usuarios SET $moeda = $moeda + ? WHERE id = ?");
+        $stmt->bind_param("di", $quantidade, $userId);
+    }
+
+    $stmt->execute();
+    $stmt->close();
+}
+
+function obterSaldoTotalEmReais($userId)
+{
+    global $banco;
+    
+    $stmt = $banco->prepare("SELECT saldo, USD, EUR FROM usuarios WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $stmt->bind_result($saldoReais, $saldoUSD, $saldoEUR);
+    $stmt->fetch();
+    $stmt->close();
+
+    $cotacaoUSD = obterCotacao('USD');
+    $cotacaoEUR = obterCotacao('EUR');
+
+    $saldoTotalEmReais = $saldoReais + ($saldoUSD * $cotacaoUSD) + ($saldoEUR * $cotacaoEUR);
+
+    return $saldoTotalEmReais;
+}
+
+?>
