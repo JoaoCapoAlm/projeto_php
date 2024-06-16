@@ -226,11 +226,16 @@ tr:hover {
 
 .profile-form {
     margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .profile-form label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .profile-form input,
@@ -241,6 +246,7 @@ tr:hover {
     margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    box-sizing: border-box; /* Adiciona box-sizing para uniformidade */
 }
 
 .profile-form button {
@@ -266,41 +272,6 @@ tr:hover {
 
 .btn-back:hover {
     background-color: #218838;
-}
-
-.profile-form {
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-}
-
-.profile-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.profile-form input,
-.profile-form select,
-.profile-form button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.profile-form button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.profile-form button:hover {
-    background-color: #0056b3;
 }
 
 .profile-summary {
