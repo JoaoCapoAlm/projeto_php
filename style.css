@@ -295,3 +295,44 @@ tr:hover {
 #frame{
     min-height: 600px;
 }
+.form-periodo,
+.form-grafico {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-periodo select,
+.form-grafico select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.form-periodo button,
+.form-grafico button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-periodo button:hover,
+.form-grafico button:hover {
+    background-color: #0056b3;
+}
+
+.form-grafico select {
+    width: 120px;
+}
+.chartForm{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -47,30 +47,36 @@ $eur = obterSaldoMoeda($userId, 'EUR');
         </ul>
     <?php endif; ?>
 </nav>
-
 <div class="container" id="Menu">
     <div class="chart">
-        <form method="post" class="form-periodo">
-            <select name="periodo" id="">
-                <option value=""><?php echo $_SESSION['periodo'] ?> dias</option>
-                <option value="7">7 dias</option>
-                <option value="15">15 dias</option>
-                <option value="30">30 dias</option>
-                <option value="90">90 dias</option>
-                <option value="180">180 dias</option>
-                <option value="365">365 dias</option>
-            </select>
-            <button type="submit">Aplicar</button>
-        </form>
+        <div class="chartForm" >
+            <form method="post" class="form-periodo">
+                <label for="">Periodo: </label>
+                <select name="periodo" id="">
+                    <option value=""><?php echo $_SESSION['periodo'] ?> dias</option>
+                    <option value="7">7 dias</option>
+                    <option value="15">15 dias</option>
+                    <option value="30">30 dias</option>
+                    <option value="90">90 dias</option>
+                    <option value="180">180 dias</option>
+                    <option value="365">365 dias</option>
+                </select>
+                <button type="submit">Aplicar</button>
 
-        <form method="post" class="form-grafico">
-            <select name="grafico" id="tipo_grafico">
-                <option value="line">Linha</option>
-                <option value="bar">Barras</option>
-                <option value="radar">Radar</option>
-            </select>
-            <button type="submit">Aplicar</button>
-        </form>
+            </form>
+
+            <form method="post" class="form-grafico">
+                <label for="">Tipo de grafico: </label>
+                <select name="grafico" id="tipo_grafico">
+                    <option value=""><?php echo $_SESSION['grafico']?></option>
+                    <option value="line">line</option>
+                    <option value="bar">bar</option>
+                    <option value="radar">radar</option>
+                </select>
+                <button type="submit">Aplicar</button>
+            </form>
+        </div>
+
 
         <?php
         $apiUrl = "https://economia.awesomeapi.com.br/json/daily/$selectedCurrency/$selectedPeriodo";
