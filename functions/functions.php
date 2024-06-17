@@ -90,7 +90,7 @@ function obterSaldoTotalEmReais($userId)
 
     return $saldoTotalEmReais;
 }
-function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $pageSize = 20, $pag = 'page'): void
+function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $pageSize = 14, $pag = 'page'): void
 {
     $page = isset($_GET[$pag]) ? max(1, intval($_GET[$pag])) : 1;
 

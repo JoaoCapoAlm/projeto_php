@@ -43,11 +43,11 @@ main {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    width: 100%;
 }
 
 .container {
     width: 100%;
-    max-width: 800px;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -200,7 +200,7 @@ tr:hover {
 }
 
 .container {
-    max-width: 800px;
+   width: 90%;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -289,4 +289,50 @@ tr:hover {
 .profile-summary p {
     margin: 10px 0;
     font-size: 1.1em;
+}
+
+
+@media (min-width: 720px) {
+    #Menu {
+        display: flex;
+       
+        justify-content: space-between;
+    }
+
+    .form-periodo, .form-grafico {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .form-periodo:last-child, .form-grafico:last-child {
+        margin-right: 0;
+    }
+    .chart{
+        width: 80%;
+        height: 600px;
+    }
+}
+.form-periodo, .form-grafico {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.form-periodo select, .form-grafico select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-periodo button, .form-grafico button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-periodo button:hover, .form-grafico button:hover {
+    background-color: #0056b3;
 }

@@ -1,7 +1,7 @@
 <?php
 // $banco = new mysqli("localhost:3307", "lucas", "", "projeto");
-$banco = new mysqli("localhost:3307", "root", "", "projeto");
-// $banco = new mysqli("localhost:3307", "Levoratech", "342711Lu#3427", "levoratech");
+// $banco = new mysqli("localhost:3307", "root", "", "projeto");
+$banco = new mysqli("localhost:3307", "Levoratech", "342711Lu#3427", "levoratech");
 
 
 

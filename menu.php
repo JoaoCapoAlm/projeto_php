@@ -36,8 +36,9 @@ $usd = obterSaldoMoeda($userId, 'USD');
 $eur = obterSaldoMoeda($userId, 'EUR');
 ?>
 
-<div class="container">
-    <form method="post">
+<div class="container" id="Menu">
+    <div class="chart">    
+    <form method="post" class="form-periodo">
         <select name="periodo" id="">
             <option value=""><?php echo $_SESSION['periodo'] ?> dias</option>
             <option value="7">7 dias</option>
@@ -50,7 +51,7 @@ $eur = obterSaldoMoeda($userId, 'EUR');
         <button type="submit">Aplicar</button>
     </form>
 
-    <form method="post">
+    <form method="post" class="form-grafico">
         <select name="grafico" id="tipo_grafico">
             <option value="line">Linha</option>
             <option value="bar">Barras</option>
@@ -63,6 +64,7 @@ $eur = obterSaldoMoeda($userId, 'EUR');
     $apiUrl = "https://economia.awesomeapi.com.br/json/daily/$selectedCurrency/$selectedPeriodo";
     generateChartFromApi($apiUrl, 'myChart', $selectedGrafico, $selectedCurrency, 'Data', 'Valor em Reais');
     ?>
+    </div>
 
     <div class="profile-summary">
         <h3>Meu Perfil</h3>
@@ -75,7 +77,8 @@ $eur = obterSaldoMoeda($userId, 'EUR');
     </div>
 </div>
 
-<div class="container" style="height: 600px; padding:10px;">
+
+<div class="container" style="height: 800px;">
     <iframe src="./parts/table.php?currency=<?php echo $selectedCurrency ?>&periodo=<?php echo $selectedPeriodo ?>&" frameborder="0" style="width: 100%; height:100%;"></iframe>
 </div>
 
