@@ -15,6 +15,7 @@ include "./parts/header.php";
       <label for="confirmaSenha">Confirme a sua senha: </label><br>
       <input type="password" name="confirmaSenha" id="confirmaSenha" required><br>
       <input type="submit" value="Enviar"><br>
+      <a href="index.php">Voltar para o login</a>
       <?php
 
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -28,9 +29,13 @@ include "./parts/header.php";
           if ($senha != $confirmaSenha) {
             echo "<p style='color:red;'><b>As senhas informadas não são iguais.<b><p>";
           } else {
-            criarUsuario($cadLogin, $nome, $senha, $cpf);
-            header('location: ./menu.php');
-            exit();
+            if (usuarioExiste($cadLogin)) {
+              echo "<p style='color:red;'><b>Este login já está em uso. Por favor, escolha outro.<b><p>";
+            } else {
+              criarUsuario($cadLogin, $nome, $senha, $cpf);
+              header('location: ./menu.php');
+              exit();
+            }
           }
         }
 

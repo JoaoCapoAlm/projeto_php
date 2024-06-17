@@ -8,7 +8,9 @@ function createOnDB($into, $value)
     global $banco;
 
     $q = "INSERT INTO $into VALUES $value";
-   echo $banco->query($q);
+    if (!$banco->query($q)) {
+        throw new Exception($banco->error);
+    }
 }
 
 function updateOnDB($data, $set, $where)
@@ -16,11 +18,13 @@ function updateOnDB($data, $set, $where)
     global $banco;
 
     $q = "UPDATE $data SET $set WHERE $where";
-    $banco->query($q);
+    if (!$banco->query($q)) {
+        throw new Exception($banco->error);
+    }
 }
 
 
-function criarUsuario($usuario, $nome, $senha, $cpf, $saldo=1000, $usd=0, $eur=0)
+function criarUsuario($usuario, $nome, $senha, $cpf, $saldo = 1000, $usd = 0, $eur = 0)
 {
     $senha = password_hash($senha, PASSWORD_DEFAULT);
     createOnDB('usuarios', "(NULL, '$usuario', '$nome', '$cpf', '$senha', $saldo, $usd, $eur)");
@@ -63,3 +67,15 @@ function loginDB($login, $senha)
         return false;
     }
 }
+
+function usuarioExiste($login)
+{
+    global $banco;
+
+    $q = "SELECT id FROM usuarios WHERE login = '$login' LIMIT 1";
+    $resp = $banco->query($q);
+
+    return $resp && $resp->num_rows > 0;
+
+}
+?>
