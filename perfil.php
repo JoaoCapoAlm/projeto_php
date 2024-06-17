@@ -9,21 +9,20 @@ if (!$_SESSION['user_id']) {
 }
 
 $userId = $_SESSION['user_id'];
-$saldo = obterSaldo($userId);
-$usd = obterSaldoMoeda($userId, 'USD');
-$eur = obterSaldoMoeda($userId, 'EUR');
+$usuario = obterUsuario($userId);
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['operacao'])) {
         if ($_POST['operacao'] === 'comprar') {
-            $_SESSION['operação'] = realizarOperacao('comprar', $_POST['moeda'], $_POST['quantidade'], $saldo);
+            $_SESSION['operação'] = realizarOperacao('comprar', $_POST['moeda'], $_POST['quantidade'], $usuario->saldo);
         } elseif ($_POST['operacao'] === 'vender') {
-            $_SESSION['operação'] = realizarOperacao('vender', $_POST['moeda'], $_POST['quantidade'], $saldo);
+            $_SESSION['operação'] = realizarOperacao('vender', $_POST['moeda'], $_POST['quantidade'], $usuario->saldo);
         }
         header('Location: perfil.php');
         exit();
     } elseif (isset($_POST['deposito'])) {
-        realizarDeposito($_POST['moeda'], $_POST['quantidade'], $userId);
+        realizarDeposito($_POST['quantidade'], $userId);
         header('Location: perfil.php');
         exit();
     }
@@ -38,10 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?></p><br>
     </div>
     <div class="profile-balance">
-        <p>Saldo Atual em R$: <?php echo number_format($saldo, 2, ',', '.'); ?></p>
-        <p>Saldo Atual em USD: <?php echo number_format($usd, 2, ',', '.'); ?></p>
-        <p>Saldo Atual em EUR: <?php echo number_format($eur, 2, ',', '.'); ?></p>
-    </div>
+    <?php echo ($usuario->saldo > 0) ? '<p>Saldo R$: ' . number_format($usuario->saldo, 2, ',', '.') . '</p>' : ''; ?>
+    <?php echo ($usuario->USD > 0) ? '<p>Saldo USD: ' . number_format($usuario->USD, 2, ',', '.') . '</p>' : ''; ?>
+    <?php echo ($usuario->EUR > 0) ? '<p>Saldo EUR: ' . number_format($usuario->EUR, 2, ',', '.') . '</p>' : ''; ?>
+    <?php echo ($usuario->GBP > 0) ? '<p>Saldo GBP: ' . number_format($usuario->GBP, 2, ',', '.') . '</p>' : ''; ?>
+    <?php echo ($usuario->JPY > 0) ? '<p>Saldo JPY: ' . number_format($usuario->JPY, 2, ',', '.') . '</p>' : ''; ?>
+    <?php echo ($usuario->AUD > 0) ? '<p>Saldo AUD: ' . number_format($usuario->AUD, 2, ',', '.') . '</p>' : ''; ?>
+    <?php echo ($usuario->CAD > 0) ? '<p>Saldo CAD: ' . number_format($usuario->CAD, 2, ',', '.') . '</p>' : ''; ?>
+</div>
+
 
     <div class="profile-form">
         <form method="post">

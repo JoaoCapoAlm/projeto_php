@@ -39,7 +39,6 @@ $eur = obterSaldoMoeda($userId, 'EUR');
     <?php if ($paginaApenasLogado) : ?>
         <ul class="currency-nav">
             <?php
-            $currencies = ["USD-BRL", "EUR-BRL", "BTC-BRL", "GBP-BRL", "JPY-BRL", "AUD-BRL", "CAD-BRL"];
             foreach ($currencies as $currency) {
                 echo "<li><a style='color: black;' href='?currency=$currency'>$currency</a></li>";
             }

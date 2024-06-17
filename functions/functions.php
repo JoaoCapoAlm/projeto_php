@@ -1,4 +1,5 @@
 <?php
+include './functions/UsuarioModel.php';
 function obterSaldo($userId)
 {
     global $banco;
@@ -23,11 +24,11 @@ function obterSaldoMoeda($userId, $moeda)
     return $saldo;
 }
 
-function realizarOperacao($operacao, $moeda, $quantidade,$saldo)
+function realizarOperacao($operacao, $moeda, $quantidade, $saldo)
 {
     global $banco, $userId;
     $cotacao = obterCotacao($moeda);
-    if($quantidade * $cotacao > $saldo){
+    if ($quantidade * $cotacao > $saldo) {
         echo "<script>alert('saldo insulficiente');</script>";
         return "Saldo insulficiente";
     }
@@ -53,21 +54,39 @@ function obterCotacao($moeda)
     $apiUrl = "https://economia.awesomeapi.com.br/json/last/$moeda-BRL";
     $json = file_get_contents($apiUrl);
     $data = json_decode($json, true);
-    return $data["$moeda"."BRL"]['bid'];
+    return $data["$moeda" . "BRL"]['bid'];
 }
 
-function realizarDeposito($moeda, $quantidade, $userId)
+function obterUsuario($userId)
 {
     global $banco;
 
-    if ($moeda === 'R$') {
-        $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ? WHERE id = ?");
-        $stmt->bind_param("di", $quantidade, $userId);
-    } else {
-        $stmt = $banco->prepare("UPDATE usuarios SET $moeda = $moeda + ? WHERE id = ?");
-        $stmt->bind_param("di", $quantidade, $userId);
+    $query = "SELECT id, login, nome, cpf, senha, saldo, USD, EUR, GBP, JPY, AUD, CAD FROM usuarios WHERE id = ?";
+    $stmt = $banco->prepare($query);
+    if ($stmt === false) {
+        throw new Exception("Erro ao preparar a consulta: " . $banco->error);
     }
 
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+
+    $stmt->bind_result($id, $login, $nome, $cpf, $senha, $saldo, $USD, $EUR,  $GBP, $JPY, $AUD, $CAD);
+    $stmt->fetch();
+
+    $usuario = new Usuario($id, $login, $nome, $cpf, $senha, $saldo, $USD, $EUR, $GBP, $JPY, $AUD, $CAD);
+
+    $stmt->close();
+
+    return $usuario;
+}
+
+
+function realizarDeposito($quantidade, $userId)
+{
+    global $banco;
+
+    $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ? WHERE id = ?");
+    $stmt->bind_param("di", $quantidade, $userId);
     $stmt->execute();
     $stmt->close();
 }
@@ -75,7 +94,7 @@ function realizarDeposito($moeda, $quantidade, $userId)
 function obterSaldoTotalEmReais($userId)
 {
     global $banco;
-    
+
     $stmt = $banco->prepare("SELECT saldo, USD, EUR FROM usuarios WHERE id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -157,7 +176,7 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
     }
     echo "</table>";
 
-    
+
     echo "<div class='paginas'>";
     if ($page > 1) {
         $prevPage = $page - 1;
@@ -169,7 +188,6 @@ function renderTableFromApi($apiUrl, $selectedCurrency, $tableClass, $msg, $page
         echo "<a href='" . $_SERVER['PHP_SELF'] . "?currency=" . ($_GET['currency'] ?? 1) . "&$pag=$nextPage'>Próximo</a>";
     }
     echo "</div>";
-    
 }
 
 function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $chartTitle = 'Gráfico', $xAxisLabel = 'Data', $yAxisLabel = 'Valor', $pageSize = 365): void
@@ -242,6 +260,6 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $
                 }
             }
         });
-    </script>    
+    </script>
 <?php
 }

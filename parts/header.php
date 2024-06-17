@@ -4,6 +4,8 @@ require_once './functions/banco.php';
 require_once './functions/functions.php';
 @session_start();
 $paginaApenasLogado = $paginaApenasLogado ?? false;
+$currencies = ["USD-BRL", "EUR-BRL","GBP-BRL", "JPY-BRL", "AUD-BRL", "CAD-BRL"];
+
 ?>
 
 <!doctype html>
