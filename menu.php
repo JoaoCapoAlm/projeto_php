@@ -61,36 +61,7 @@ $saldo = obterSaldo($userId);
                 <button type="submit">Aplicar</button>
 
             </form>
-            <script type="text/javascript">
-                google.charts.load('current', {
-                    'packages': ['corechart']
-                });
-                google.charts.setOnLoadCallback(drawChart);
-
-
-
-
-                function drawChart() {
-
-                    var data = google.visualization.arrayToDataTable([
-                        ['Moeda', 'Saldo'],
-                        ['EUR', <?php echo $usuario->EUR ?>],
-                        ['GBP', <?php echo $usuario->GBP ?>],
-                        ['JPY', <?php echo $usuario->JPY ?>],
-                        ['AUD', <?php echo $usuario->AUD ?>],
-                        ['BRL', <?php echo $usuario->saldo ?>],
-                        ['CAD', <?php echo $usuario->CAD ?>]
-                    ]);
-
-                    var options = {
-                        title: 'Finanças'
-                    };
-
-                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-                    chart.draw(data, options);
-                }
-            </script>
+          
             <form method="post" class="form-grafico">
                 <label for="">Tipo de grafico: </label>
                 <select name="grafico" id="tipo_grafico">
@@ -123,7 +94,20 @@ $saldo = obterSaldo($userId);
                 <?php echo ($usuario->saldo > 0) ? '<p> R$: ' . number_format($usuario->saldo, 2, ',', '.') . '</p>' : ''; ?>
             </div>
             <div style="width: 70%; ">
-                <div id="piechart" style="width: 100%; height: 500px;"></div>
+                <?php 
+                $pie = [
+                    "saldo" => "Finanças",
+                    "EUR" => [$usuario->EUR, "yellow"],
+                    "JPY" => [$usuario->GBP, "red"],
+                    "USD" => [$usuario->USD, "red"],
+                    "JPY" => [$usuario->JPY, "blue"],
+                    "AUD" => [$usuario->AUD , "orange"],
+                    "CAD" => [$usuario->CAD , "#C10020"],
+                    "BRL" => [$usuario->saldo, "GREEN"],
+                ];
+                
+                renderPieChart($pie);?>
+           
             </div>
         </div>
 

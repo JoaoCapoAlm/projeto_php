@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: perfil.php');
         exit();
     } elseif (isset($_POST['deposito'])) {
-        realizarDeposito('R$',$_POST['quantidade'], $userId);
+        $_SESSION['operação'] = realizarDeposito('R$',$_POST['quantidade'], $userId);
         header('Location: perfil.php');
         exit();
     }

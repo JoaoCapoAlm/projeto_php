@@ -41,6 +41,7 @@ function realizarOperacao($operacao, $moeda, $quantidade, $saldo)
         $stmt->execute();
         $stmt->close();
         obterUsuario($userId);
+        return "Comprado $quantidade $moeda Total de R$". number_format($valorOperacao ,2,',');
     } elseif ($operacao === 'vender') {
         $valorOperacao = $quantidade * $cotacao;
         $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ?, $moeda = $moeda - ? WHERE id = ?");
@@ -48,6 +49,8 @@ function realizarOperacao($operacao, $moeda, $quantidade, $saldo)
         $stmt->execute();
         $stmt->close();
         obterUsuario($userId);
+        return "Vendido $quantidade $moeda Total de R$". number_format($valorOperacao ,2,',');
+
     }
     return "Efetuado";
 }
@@ -87,10 +90,13 @@ function obterUsuario($userId)
 function realizarDeposito($moeda, $quantidade, $userId)
 {
     global $banco;
-
+    if($quantidade < 0){
+        return 'invalido numeros menores que 0';
+    }
     if ($moeda === 'R$') {
         $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ? WHERE id = ?");
         $stmt->bind_param("di", $quantidade, $userId);
+        
     } else {
         $stmt = $banco->prepare("UPDATE usuarios SET $moeda = $moeda + ? WHERE id = ?");
         $stmt->bind_param("di", $quantidade, $userId);
@@ -98,6 +104,7 @@ function realizarDeposito($moeda, $quantidade, $userId)
 
     $stmt->execute();
     $stmt->close();
+    return "depósito realizado de R$ $quantidade ";
 }
 
 function obterSaldoTotalEmReais($userId)
@@ -226,7 +233,7 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $
 
     $labels = json_encode($labels);
     $values = json_encode($values);
-?>
+ ?>
 
     <canvas id="<?= $chartId ?>"></canvas>
 
@@ -270,7 +277,72 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $
             }
         });
     </script>
-<?php
+ <?php
+}
+
+
+function renderPieChart($pie) {
+    // Verifica se os dados são suficientes para gerar o gráfico
+    if (!isset($pie['saldo']) || count($pie) < 2) {
+        echo "Dados insuficientes para gerar o gráfico.";
+        return;
+    }
+
+    $title = $pie['saldo'];
+    
+    // Prepare os dados para o gráfico
+    $data = [];
+    $currencyColors = [];
+    foreach ($pie as $currency => $info) {
+        if ($currency != 'saldo') {
+            $data[] = [$currency, $info[0]];
+            $currencyColors[$currency] = $info[1];
+        }
+    }
+
+    ?>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Moeda', 'Saldo'],
+                <?php
+                foreach ($data as $item) {
+                    echo "['{$item[0]}', {$item[1]}],";
+                }
+                ?>
+            ]);
+
+            var currencyColors = <?php echo json_encode($currencyColors); ?>;
+
+            var options = {
+                title: '<?php echo $title; ?>',
+                is3D: true,
+                colors: (function() {
+                    var colorsArray = [];
+                    for (var i = 0; i < data.getNumberOfRows(); i++) {
+                        var currency = data.getValue(i, 0);
+                        colorsArray.push(currencyColors[currency] || '#ccc'); // Default gray for unknown currencies
+                    }
+                    return colorsArray;
+                })()
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+    <div id="piechart" style="width: 100%; height: 500px;"></div>
+    <?php 
 }
 ?>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<?php
+
+
+?>
