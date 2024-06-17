@@ -47,9 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post">
             <label for="moeda">Moeda:</label>
             <select name="moeda" id="moeda">
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="R$">R$</option>
+            <option value="R$">R$</option>
+                <?php 
+                foreach ($currencies as $currency) {
+                    
+                    $parts = explode('-', $currency);
+                    $primeira_moeda = $parts[0];
+                    echo "<option value='$primeira_moeda'>$primeira_moeda</option>";
+                }
+                ?>
             </select>
             <label for="quantidade">Quantidade:</label>
             <input type="number" name="quantidade" id="quantidade" step="0.01" required>

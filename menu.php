@@ -35,35 +35,47 @@ $saldo = obterSaldo($userId);
 $usd = obterSaldoMoeda($userId, 'USD');
 $eur = obterSaldoMoeda($userId, 'EUR');
 ?>
+<nav>
+    <?php if ($paginaApenasLogado) : ?>
+        <ul class="currency-nav">
+            <?php
+            $currencies = ["USD-BRL", "EUR-BRL", "BTC-BRL", "GBP-BRL", "JPY-BRL", "AUD-BRL", "CAD-BRL"];
+            foreach ($currencies as $currency) {
+                echo "<li><a style='color: black;' href='?currency=$currency'>$currency</a></li>";
+            }
+            ?>
+        </ul>
+    <?php endif; ?>
+</nav>
 
 <div class="container" id="Menu">
-    <div class="chart">    
-    <form method="post" class="form-periodo">
-        <select name="periodo" id="">
-            <option value=""><?php echo $_SESSION['periodo'] ?> dias</option>
-            <option value="7">7 dias</option>
-            <option value="15">15 dias</option>
-            <option value="30">30 dias</option>
-            <option value="90">90 dias</option>
-            <option value="180">180 dias</option>
-            <option value="365">365 dias</option>
-        </select>
-        <button type="submit">Aplicar</button>
-    </form>
+    <div class="chart">
+        <form method="post" class="form-periodo">
+            <select name="periodo" id="">
+                <option value=""><?php echo $_SESSION['periodo'] ?> dias</option>
+                <option value="7">7 dias</option>
+                <option value="15">15 dias</option>
+                <option value="30">30 dias</option>
+                <option value="90">90 dias</option>
+                <option value="180">180 dias</option>
+                <option value="365">365 dias</option>
+            </select>
+            <button type="submit">Aplicar</button>
+        </form>
 
-    <form method="post" class="form-grafico">
-        <select name="grafico" id="tipo_grafico">
-            <option value="line">Linha</option>
-            <option value="bar">Barras</option>
-            <option value="radar">Radar</option>
-        </select>
-        <button type="submit">Aplicar</button>
-    </form>
+        <form method="post" class="form-grafico">
+            <select name="grafico" id="tipo_grafico">
+                <option value="line">Linha</option>
+                <option value="bar">Barras</option>
+                <option value="radar">Radar</option>
+            </select>
+            <button type="submit">Aplicar</button>
+        </form>
 
-    <?php
-    $apiUrl = "https://economia.awesomeapi.com.br/json/daily/$selectedCurrency/$selectedPeriodo";
-    generateChartFromApi($apiUrl, 'myChart', $selectedGrafico, $selectedCurrency, 'Data', 'Valor em Reais');
-    ?>
+        <?php
+        $apiUrl = "https://economia.awesomeapi.com.br/json/daily/$selectedCurrency/$selectedPeriodo";
+        generateChartFromApi($apiUrl, 'myChart', $selectedGrafico, $selectedCurrency, 'Data', 'Valor em Reais');
+        ?>
     </div>
 
     <div class="profile-summary">
