@@ -27,5 +27,6 @@ class Usuario {
         $this->AUD = $AUD;
         $this->CAD = $CAD;
     }
+   
 }
 ?>

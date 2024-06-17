@@ -200,7 +200,7 @@ tr:hover {
 }
 
 .container {
-   width: 85%;
+    width: 85%;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -246,7 +246,8 @@ tr:hover {
     margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    box-sizing: border-box; /* Adiciona box-sizing para uniformidade */
+    box-sizing: border-box;
+    /* Adiciona box-sizing para uniformidade */
 }
 
 .profile-form button {
@@ -275,7 +276,6 @@ tr:hover {
 }
 
 .profile-summary {
-    background-color: #bebebe;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -292,9 +292,10 @@ tr:hover {
 }
 
 
-#frame{
+#frame {
     min-height: 600px;
 }
+
 .form-periodo,
 .form-grafico {
     display: flex;
@@ -330,9 +331,15 @@ tr:hover {
 .form-grafico select {
     width: 120px;
 }
-.chartForm{
+
+.chartForm {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+}
+
+#piechart {
+   
+
 }

@@ -29,7 +29,7 @@ function updateOnDB($data, $set, $where)
 function criarUsuario($usuario, $nome, $senha, $cpf, $saldo = 1000, $usd = 0, $eur = 0)
 {
     $senha = password_hash($senha, PASSWORD_DEFAULT);
-    createOnDB('usuarios', "(NULL, '$usuario', '$nome', '$cpf', '$senha', $saldo, $usd, $eur)");
+    createOnDB('usuarios', "(NULL, '$usuario', '$nome', '$cpf', '$senha', $saldo, $usd, $eur,0,0,0,0)");
 }
 
 function atualizarUsuario($usuario, $nome = "", $senha = "")

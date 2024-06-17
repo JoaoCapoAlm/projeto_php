@@ -25,13 +25,12 @@ function obterSaldoMoeda($userId, $moeda)
 
 function realizarOperacao($operacao, $moeda, $quantidade, $saldo)
 {
-    if($moeda == 'R$'){
+    if ($moeda == 'R$') {
         return 'invalido';
     }
     global $banco, $userId;
     $cotacao = obterCotacao($moeda);
     if ($quantidade * $cotacao > $saldo) {
-        echo "<script>alert('saldo insulficiente');</script>";
         return "Saldo insulficiente";
     }
 
@@ -41,12 +40,14 @@ function realizarOperacao($operacao, $moeda, $quantidade, $saldo)
         $stmt->bind_param("ddi", $valorOperacao, $quantidade, $userId);
         $stmt->execute();
         $stmt->close();
+        obterUsuario($userId);
     } elseif ($operacao === 'vender') {
         $valorOperacao = $quantidade * $cotacao;
         $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ?, $moeda = $moeda - ? WHERE id = ?");
         $stmt->bind_param("ddi", $valorOperacao, $quantidade, $userId);
         $stmt->execute();
         $stmt->close();
+        obterUsuario($userId);
     }
     return "Efetuado";
 }
@@ -271,3 +272,5 @@ function generateChartFromApi($apiUrl, $chartId = 'chart', $chartType = 'bar', $
     </script>
 <?php
 }
+?>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

@@ -9,6 +9,7 @@ $currencies = ["USD-BRL", "EUR-BRL","GBP-BRL", "JPY-BRL", "AUD-BRL", "CAD-BRL"];
 
 if(isset($_SESSION['user_id'])){
     $usuario = obterUsuario($_SESSION['user_id']);
+    $userId = $usuario->id;
 }
 
 ?>

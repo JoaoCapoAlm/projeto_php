@@ -32,8 +32,6 @@ if (!$_SESSION['user_id']) {
 $userId = $_SESSION['user_id'];
 $saldoTotalEmReais = obterSaldoTotalEmReais($userId);
 $saldo = obterSaldo($userId);
-$usd = obterSaldoMoeda($userId, 'USD');
-$eur = obterSaldoMoeda($userId, 'EUR');
 ?>
 <nav>
     <?php if ($paginaApenasLogado) : ?>
@@ -63,7 +61,36 @@ $eur = obterSaldoMoeda($userId, 'EUR');
                 <button type="submit">Aplicar</button>
 
             </form>
+            <script type="text/javascript">
+                google.charts.load('current', {
+                    'packages': ['corechart']
+                });
+                google.charts.setOnLoadCallback(drawChart);
 
+
+
+
+                function drawChart() {
+
+                    var data = google.visualization.arrayToDataTable([
+                        ['Moeda', 'Saldo'],
+                        ['EUR', <?php echo $usuario->EUR ?>],
+                        ['GBP', <?php echo $usuario->GBP ?>],
+                        ['JPY', <?php echo $usuario->JPY ?>],
+                        ['AUD', <?php echo $usuario->AUD ?>],
+                        ['BRL', <?php echo $usuario->saldo ?>],
+                        ['CAD', <?php echo $usuario->CAD ?>]
+                    ]);
+
+                    var options = {
+                        title: 'Finanças'
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                    chart.draw(data, options);
+                }
+            </script>
             <form method="post" class="form-grafico">
                 <label for="">Tipo de grafico: </label>
                 <select name="grafico" id="tipo_grafico">
@@ -85,14 +112,23 @@ $eur = obterSaldoMoeda($userId, 'EUR');
 
     <div class="profile-summary">
         <h3>Meu Perfil - Saldo</h3>
-        <?php echo ($usuario->USD > 0) ? '<p> USD: ' . number_format($usuario->USD, 2, ',', '.') . '</p>' : ''; ?>
-        <?php echo ($usuario->EUR > 0) ? '<p> EUR: ' . number_format($usuario->EUR, 2, ',', '.') . '</p>' : ''; ?>
-        <?php echo ($usuario->GBP > 0) ? '<p> GBP: ' . number_format($usuario->GBP, 2, ',', '.') . '</p>' : ''; ?>
-        <?php echo ($usuario->JPY > 0) ? '<p> JPY: ' . number_format($usuario->JPY, 2, ',', '.') . '</p>' : ''; ?>
-        <?php echo ($usuario->AUD > 0) ? '<p> AUD: ' . number_format($usuario->AUD, 2, ',', '.') . '</p>' : ''; ?>
-        <?php echo ($usuario->CAD > 0) ? '<p> CAD: ' . number_format($usuario->CAD, 2, ',', '.') . '</p>' : ''; ?>
-        <?php echo ($usuario->saldo > 0) ? '<p> R$: ' . number_format($usuario->saldo, 2, ',', '.') . '</p>' : ''; ?>
-        
+        <div style="display: flex;width: 100%;">
+            <div style="width: 30%;">
+                <?php echo ($usuario->USD > 0) ? '<p> USD: ' . number_format($usuario->USD, 2, ',', '.') . '</p>' : ''; ?>
+                <?php echo ($usuario->EUR > 0) ? '<p> EUR: ' . number_format($usuario->EUR, 2, ',', '.') . '</p>' : ''; ?>
+                <?php echo ($usuario->GBP > 0) ? '<p> GBP: ' . number_format($usuario->GBP, 2, ',', '.') . '</p>' : ''; ?>
+                <?php echo ($usuario->JPY > 0) ? '<p> JPY: ' . number_format($usuario->JPY, 2, ',', '.') . '</p>' : ''; ?>
+                <?php echo ($usuario->AUD > 0) ? '<p> AUD: ' . number_format($usuario->AUD, 2, ',', '.') . '</p>' : ''; ?>
+                <?php echo ($usuario->CAD > 0) ? '<p> CAD: ' . number_format($usuario->CAD, 2, ',', '.') . '</p>' : ''; ?>
+                <?php echo ($usuario->saldo > 0) ? '<p> R$: ' . number_format($usuario->saldo, 2, ',', '.') . '</p>' : ''; ?>
+            </div>
+            <div style="width: 70%; ">
+                <div id="piechart" style="width: 100%; height: 500px;"></div>
+            </div>
+        </div>
+
+
+
         <a href="perfil.php" class="btn-perfil">Acessar Meu Perfil</a>
     </div>
 </div>
