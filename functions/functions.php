@@ -23,10 +23,14 @@ function obterSaldoMoeda($userId, $moeda)
     return $saldo;
 }
 
-function realizarOperacao($operacao, $moeda, $quantidade)
+function realizarOperacao($operacao, $moeda, $quantidade,$saldo)
 {
     global $banco, $userId;
     $cotacao = obterCotacao($moeda);
+    if($quantidade * $cotacao > $saldo){
+        echo "<script>alert('saldo insulficiente');</script>";
+        return "Saldo insulficiente";
+    }
 
     if ($operacao === 'comprar') {
         $valorOperacao = $quantidade * $cotacao;
@@ -41,6 +45,7 @@ function realizarOperacao($operacao, $moeda, $quantidade)
         $stmt->execute();
         $stmt->close();
     }
+    return "Efetuado";
 }
 
 function obterCotacao($moeda)

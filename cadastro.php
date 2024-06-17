@@ -1,15 +1,22 @@
 <?php 
 include "./parts/header.php";
+
+
+$nome = $_POST['nome'] ?? "";
+$cpf = $_POST['cpf'] ?? "";
+$cadLogin = $_POST['cadLogin'] ?? "";
+
+
 ?>
   <div class="cadastro">
     <h3>Realize o seu cadastro</h3>
     <form action="" method="post">
       <label for="nome">Digite o seu nome: </label><br>
-      <input type="text" name="nome" id="nome" required><br>
+      <input type="text" name="nome" id="nome" value="<?php echo $nome ?>" required><br>
       <label for="cpf">Informe o seu CPF: </label><br>
-      <input type="text" name="cpf" id="cpf" required><br>
+      <input type="text" name="cpf" id="cpf" value="<?php echo $cpf ?>" required><br>
       <label for="cadLogin">Qual será o seu login? </label><br>
-      <input type="text" name="cadLogin" id="cadLogin"><br>
+      <input type="text" name="cadLogin" id="cadLogin" value="<?php echo $cadLogin ?>"><br>
       <label for="senha">Crie a sua senha: </label><br>
       <input type="password" name="senha" id="senha" required><br>
       <label for="confirmaSenha">Confirme a sua senha: </label><br>

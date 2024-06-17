@@ -12,10 +12,9 @@ $userId = $_SESSION['user_id'];
 $saldo = obterSaldo($userId);
 $usd = obterSaldoMoeda($userId, 'USD');
 $eur = obterSaldoMoeda($userId, 'EUR');
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['operacao'])) {
-        realizarOperacao($_POST['operacao'], $_POST['moeda'], $_POST['quantidade']);
+        $_SESSION['operação'] = realizarOperacao($_POST['operacao'], $_POST['moeda'], $_POST['quantidade'],$saldo);
         header('Location: perfil.php');
         exit();
     }
@@ -30,8 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <div class="profile-header">
         <h2>Meu Perfil</h2>
+        <p><?php echo $_SESSION['operação'] ?? ''; 
+            $_SESSION['operação'] = '';
+        ?></p><br>
     </div>
     <div class="profile-balance">
+        
         <p>Saldo Atual em R$: <?php echo number_format($saldo, 2, ',', '.'); ?></p>
         <p>Saldo Atual em USD: <?php echo number_format($usd, 2, ',', '.'); ?></p>
         <p>Saldo Atual em EUR: <?php echo number_format($eur, 2, ',', '.'); ?></p>
