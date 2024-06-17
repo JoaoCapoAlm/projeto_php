@@ -292,47 +292,6 @@ tr:hover {
 }
 
 
-@media (min-width: 720px) {
-    #Menu {
-        display: flex;
-       
-        justify-content: space-between;
-    }
-
-    .form-periodo, .form-grafico {
-        flex: 1;
-        margin-right: 10px;
-    }
-
-    .form-periodo:last-child, .form-grafico:last-child {
-        margin-right: 0;
-    }
-    .chart{
-        width: 80%;
-        height: 600px;
-    }
-}
-.form-periodo, .form-grafico {
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.form-periodo select, .form-grafico select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.form-periodo button, .form-grafico button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.form-periodo button:hover, .form-grafico button:hover {
-    background-color: #0056b3;
+#frame{
+    min-height: 600px;
 }
