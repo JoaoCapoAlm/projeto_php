@@ -76,7 +76,7 @@ $eur = obterSaldoMoeda($userId, 'EUR');
 </div>
 
 <div class="container" style="height: 600px; padding:10px;">
-    <iframe src="./parts/table.php?periodo=<?php echo $selectedPeriodo ?>&currency=<?php echo $selectedCurrency ?>" frameborder="0" style="width: 100%; height:100%;"></iframe>
+    <iframe src="./parts/table.php?currency=<?php echo $selectedCurrency ?>&periodo=<?php echo $selectedPeriodo ?>&" frameborder="0" style="width: 100%; height:100%;"></iframe>
 </div>
 
 <?php include_once './parts/footer.php'; ?>
