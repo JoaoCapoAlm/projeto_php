@@ -343,6 +343,64 @@ function renderPieChart($pie) {
 ?>
 
 <?php
+function renderBarChart($bars) {
+    // Verifica se os dados são suficientes para gerar o gráfico
+    if (!isset($bars['titulo']) || !isset($bars['data']) || count($bars['data']) === 0) {
+        echo "Dados insuficientes para gerar o gráfico de barras.";
+        return;
+    }
 
+    $title = $bars['titulo'];
+    
+    // Prepara os dados para o gráfico de barras
+    $data = [['Element', 'Quantidade']];
+    foreach ($bars['data'] as $elemento => $quantidade) {
+        $data[] = [$elemento, $quantidade];
+    }
 
+    ?>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['bar']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(<?php echo json_encode($data); ?>);
+
+            var options = {
+                title: '<?php echo $title; ?>',
+                is3D: true,
+                colors: ['#3366cc'], // Cor das barras
+                chartArea: {width: '50%'}, // Área do gráfico
+                hAxis: {
+                    title: 'Quantidade',
+                    minValue: 0
+                },
+                vAxis: {
+                    title: 'Elementos'
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('barchart_3d'));
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+    </script>
+    <div id="barchart_3d" style="width: 100%; height: 500px;"></div>
+    <?php 
+}
+
+// $bars = [
+//     "titulo" => "Exemplo de Gráfico de Barras 3D",
+//     "data" => [
+//         "Elemento 1" => 10,
+//         "Elemento 2" => 20,
+//         "Elemento 3" => 15,
+//         "Elemento 4" => 30
+//     ]
+// ];
+
+// renderBarChart($bars);
 ?>
+

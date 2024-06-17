@@ -106,7 +106,9 @@ $saldo = obterSaldo($userId);
                     "BRL" => [$usuario->saldo, "GREEN"],
                 ];
                 
-                renderPieChart($pie);?>
+                renderPieChart($pie);
+                
+               ?>
            
             </div>
         </div>
