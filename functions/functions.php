@@ -1,5 +1,4 @@
 <?php
-include './functions/UsuarioModel.php';
 function obterSaldo($userId)
 {
     global $banco;
@@ -26,6 +25,9 @@ function obterSaldoMoeda($userId, $moeda)
 
 function realizarOperacao($operacao, $moeda, $quantidade, $saldo)
 {
+    if($moeda == 'R$'){
+        return 'invalido';
+    }
     global $banco, $userId;
     $cotacao = obterCotacao($moeda);
     if ($quantidade * $cotacao > $saldo) {
@@ -81,12 +83,18 @@ function obterUsuario($userId)
 }
 
 
-function realizarDeposito($quantidade, $userId)
+function realizarDeposito($moeda, $quantidade, $userId)
 {
     global $banco;
 
-    $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ? WHERE id = ?");
-    $stmt->bind_param("di", $quantidade, $userId);
+    if ($moeda === 'R$') {
+        $stmt = $banco->prepare("UPDATE usuarios SET saldo = saldo + ? WHERE id = ?");
+        $stmt->bind_param("di", $quantidade, $userId);
+    } else {
+        $stmt = $banco->prepare("UPDATE usuarios SET $moeda = $moeda + ? WHERE id = ?");
+        $stmt->bind_param("di", $quantidade, $userId);
+    }
+
     $stmt->execute();
     $stmt->close();
 }

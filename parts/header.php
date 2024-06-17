@@ -2,9 +2,14 @@
 require_once './functions/session.php';
 require_once './functions/banco.php';
 require_once './functions/functions.php';
+include './functions/UsuarioModel.php';
 @session_start();
 $paginaApenasLogado = $paginaApenasLogado ?? false;
 $currencies = ["USD-BRL", "EUR-BRL","GBP-BRL", "JPY-BRL", "AUD-BRL", "CAD-BRL"];
+
+if(isset($_SESSION['user_id'])){
+    $usuario = obterUsuario($_SESSION['user_id']);
+}
 
 ?>
 

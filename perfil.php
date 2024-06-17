@@ -8,8 +8,7 @@ if (!$_SESSION['user_id']) {
     exit();
 }
 
-$userId = $_SESSION['user_id'];
-$usuario = obterUsuario($userId);
+
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: perfil.php');
         exit();
     } elseif (isset($_POST['deposito'])) {
-        realizarDeposito($_POST['quantidade'], $userId);
+        realizarDeposito('R$',$_POST['quantidade'], $userId);
         header('Location: perfil.php');
         exit();
     }

@@ -48,7 +48,7 @@ $eur = obterSaldoMoeda($userId, 'EUR');
 </nav>
 <div class="container" id="Menu">
     <div class="chart">
-        <div class="chartForm" >
+        <div class="chartForm">
             <form method="post" class="form-periodo">
                 <label for="">Periodo: </label>
                 <select name="periodo" id="">
@@ -67,7 +67,7 @@ $eur = obterSaldoMoeda($userId, 'EUR');
             <form method="post" class="form-grafico">
                 <label for="">Tipo de grafico: </label>
                 <select name="grafico" id="tipo_grafico">
-                    <option value=""><?php echo $_SESSION['grafico']?></option>
+                    <option value=""><?php echo $_SESSION['grafico'] ?></option>
                     <option value="line">line</option>
                     <option value="bar">bar</option>
                     <option value="radar">radar</option>
@@ -84,12 +84,15 @@ $eur = obterSaldoMoeda($userId, 'EUR');
     </div>
 
     <div class="profile-summary">
-        <h3>Meu Perfil</h3>
-        <p>Saldo Atual em R$: <?php echo number_format($saldo, 2, ',', '.'); ?></p>
-        <p>Saldo Atual em USD: <?php echo number_format($usd, 2, ',', '.'); ?></p>
-        <p>Saldo Atual em EUR: <?php echo number_format($eur, 2, ',', '.'); ?></p>
-        <p>Saldo Total em R$: <?php echo number_format($saldoTotalEmReais, 2, ',', '.'); ?></p>
-
+        <h3>Meu Perfil - Saldo</h3>
+        <?php echo ($usuario->USD > 0) ? '<p> USD: ' . number_format($usuario->USD, 2, ',', '.') . '</p>' : ''; ?>
+        <?php echo ($usuario->EUR > 0) ? '<p> EUR: ' . number_format($usuario->EUR, 2, ',', '.') . '</p>' : ''; ?>
+        <?php echo ($usuario->GBP > 0) ? '<p> GBP: ' . number_format($usuario->GBP, 2, ',', '.') . '</p>' : ''; ?>
+        <?php echo ($usuario->JPY > 0) ? '<p> JPY: ' . number_format($usuario->JPY, 2, ',', '.') . '</p>' : ''; ?>
+        <?php echo ($usuario->AUD > 0) ? '<p> AUD: ' . number_format($usuario->AUD, 2, ',', '.') . '</p>' : ''; ?>
+        <?php echo ($usuario->CAD > 0) ? '<p> CAD: ' . number_format($usuario->CAD, 2, ',', '.') . '</p>' : ''; ?>
+        <?php echo ($usuario->saldo > 0) ? '<p> R$: ' . number_format($usuario->saldo, 2, ',', '.') . '</p>' : ''; ?>
+        
         <a href="perfil.php" class="btn-perfil">Acessar Meu Perfil</a>
     </div>
 </div>
