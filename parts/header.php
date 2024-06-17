@@ -22,9 +22,9 @@ $paginaApenasLogado = $paginaApenasLogado ?? false;
     <nav>
         <ul class="main-nav">
             <?php if(estaLogado()): ?>
-                <li><a href="./logout.php" class="logout-btn">Sair</a></li>
                 <li><a href="menu.php" class="btn-back">Home</a></li>
                 <li><a href="perfil.php" class="btn-perfil">Acessar Meu Perfil</a></li>
+                <li><a href="./logout.php" class="logout-btn">Sair</a></li>
             <?php endif; ?>
         </ul>
         <?php if($paginaApenasLogado): ?>
