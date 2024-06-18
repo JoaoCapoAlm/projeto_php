@@ -28,7 +28,14 @@ if(isset($_SESSION['user_id'])){
 
 <body>
     <header>
-        <h1>Trabalho PHP</h1>
+        <style>
+            h1 a {
+            text-decoration: none;
+            color: inherit;
+            cursor: default;
+        }
+        </style>
+        <h1> <a href="./parts/earth.php">T</a>rabalho PHP</h1>
         <nav>
             <ul class="main-nav">
                 <?php if (estaLogado()) : ?>
