@@ -88,7 +88,7 @@
                         requestAnimationFrame(animate);
 
 
-                        mixer.update(-0.01);
+                        mixer.update(-0.008);
 
 
                         model.rotation.y += 0.0005;
