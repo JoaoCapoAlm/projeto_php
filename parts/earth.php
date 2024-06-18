@@ -62,8 +62,8 @@
             scene.add(ambientLight);
 
 
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-            directionalLight.position.set(-200, window.innerHeight, 100);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+            directionalLight.position.set(-200, 0, 100);
             scene.add(directionalLight);
 
 
@@ -88,7 +88,7 @@
                         requestAnimationFrame(animate);
 
 
-                        mixer.update(0.001);
+                        mixer.update(-0.01);
 
 
                         model.rotation.y += 0.0005;
