@@ -68,7 +68,7 @@
 
 
             const loader = new THREE.GLTFLoader();
-            loader.load('earth.glb', function(gltf) {
+            loader.load('girls_ai.glb', function(gltf) {
                 const model = gltf.scene;
                 scene.add(model);
 
