@@ -11,12 +11,9 @@ if(isset($_SESSION['user_id'])){
     $usuario = obterUsuario($_SESSION['user_id']);
     $userId = $usuario->id;
 }
-
 ?>
-
 <!doctype html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -25,17 +22,9 @@ if(isset($_SESSION['user_id'])){
 
     <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
     <header>
-        <style>
-            h1 a {
-            text-decoration: none;
-            color: inherit;
-            cursor: default;
-        }
-        </style>
-        <h1> <a href="./parts/earth.php">T</a>rabalho PHP</h1>
+        <h1>Trabalho PHP</h1>
         <nav>
             <ul class="main-nav">
                 <?php if (estaLogado()) : ?>
