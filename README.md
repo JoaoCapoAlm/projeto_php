@@ -1,5 +1,5 @@
 # Projeto PHP
-Projeto de desenvolvimento em PHP - 1º Sem 2024
+Projeto de desenvolvimento em PHP - 1º Sem 2024 para atividade avaliativa da Universidade Positivo.
 
 ## Equipe
 | Nome                |   RGM    |
